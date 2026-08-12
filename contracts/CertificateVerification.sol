@@ -8,25 +8,42 @@ contract CertificateVerification {
         string course;
         string institution;
         uint256 issueDate;
+        address issuer;
     }
 
     mapping(string => Certificate) public certificates;
-
+        event CertificateIssued(
+        string certificateId,
+        string studentName,
+        string course,
+        string institution,
+        address issuer,
+        uint256 issueDate
+    );
     function issueCertificate(
-        string memory certificateId,
-        string memory studentName,
-        string memory course,
-        string memory institution
-    ) public {
+    string memory certificateId,
+    string memory studentName,
+    string memory course,
+    string memory institution
+) public {
+    certificates[certificateId] = Certificate(
+        studentName,
+        course,
+        institution,
+        block.timestamp,
+        msg.sender
+    );
 
-        certificates[certificateId] = Certificate(
-            studentName,
-            course,
-            institution,
-            block.timestamp
-        );
-    }
-
+    emit CertificateIssued(
+        certificateId,
+        studentName,
+        course,
+        institution,
+        msg.sender,
+        block.timestamp
+    );
+}
+         
     function verifyCertificate(string memory certificateId)
         public
         view
