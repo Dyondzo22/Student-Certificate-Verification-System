@@ -45,22 +45,24 @@ contract CertificateVerification {
 }
          
     function verifyCertificate(string memory certificateId)
-        public
-        view
-        returns (
-            string memory,
-            string memory,
-            string memory,
-            uint256
-        )
-    {
-        Certificate memory cert = certificates[certificateId];
+    public
+    view
+    returns (
+        string memory studentName,
+        string memory course,
+        string memory institution,
+        uint256 issueDate,
+        address issuer
+    )
+{
+    Certificate memory certificate = certificates[certificateId];
 
-        return (
-            cert.studentName,
-            cert.course,
-            cert.institution,
-            cert.issueDate
-        );
-    }
+    return (
+        certificate.studentName,
+        certificate.course,
+        certificate.institution,
+        certificate.issueDate,
+        certificate.issuer
+    );
 }
+    
